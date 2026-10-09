@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나를 소개합니다!</title>
+    <style>
+        /* 밝은 파스텔톤 배경 & 기본 폰트 설정 */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f0f4ff 0%, #fae8ff 50%, #fff1f2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 24px 16px;
+            color: #334155;
+            line-height: 1.6;
+        }
+
+        /* 단계별 링크 네비게이션 탭 바 */
+        .step-nav {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(8px);
+            padding: 6px;
+            border-radius: 9999px;
+            box-shadow: 0 4px 12px rgba(148, 163, 184, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            max-width: 480px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .step-nav a {
+            flex: 1;
+            text-align: center;
+            padding: 8px 12px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            text-decoration: none;
+            color: #64748b;
+            border-radius: 9999px;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .step-nav a:hover {
+            color: #4f46e5;
+            background: rgba(238, 242, 255, 0.7);
+        }
+
+        .step-nav a.active {
+            background: #6366f1;
+            color: #ffffff;
+            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.35);
+        }
+
+        /* 둥근 카드 형태 컨테이너 */
+        .card-container {
+            background: #ffffff;
+            width: 100%;
+            max-width: 480px;
+            padding: 36px 28px;
+            border-radius: 28px;
+            box-shadow: 0 16px 36px rgba(148, 163, 184, 0.18), 0 4px 12px rgba(148, 163, 184, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            text-align: center;
+            transition: transform 0.2s ease;
+        }
+
+        /* 메인 제목 */
+        h1 {
+            font-size: 1.55rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 12px;
+            letter-spacing: -0.02em;
+        }
+
+        /* 구분선 */
+        hr {
+            border: none;
+            height: 1.5px;
+            background: linear-gradient(to right, transparent, #e2e8f0, transparent);
+            margin: 20px 0;
+        }
+
+        /* 소제목 */
+        h2 {
+            font-size: 1.1rem;
+            color: #6366f1;
+            margin-top: 18px;
+            margin-bottom: 8px;
+            display: inline-block;
+            background-color: #eef2ff;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        /* 프로필 이미지 */
+        img {
+            display: block;
+            margin: 12px auto;
+            width: 170px;
+            height: 170px;
+            object-fit: cover;
+            border-radius: 50%;
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.18);
+            border: 4px solid #ffffff;
+            outline: 3px solid #e0e7ff;
+        }
+
+        /* 본문 문단 */
+        p {
+            font-size: 1rem;
+            color: #475569;
+            margin: 6px 0 14px;
+            word-break: keep-all;
+        }
+
+        p strong {
+            color: #0f172a;
+            font-size: 1.15rem;
+        }
+
+        /* 좋아하는 것 목록 */
+        ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin: 10px 0 18px;
+            padding: 0;
+        }
+
+        li {
+            background-color: #f8fafc;
+            border: 1px solid #f1f5f9;
+            padding: 10px 16px;
+            border-radius: 14px;
+            font-size: 0.96rem;
+            font-weight: 500;
+            color: #334155;
+            transition: all 0.2s ease;
+        }
+
+        li:hover {
+            background-color: #fdf2f8;
+            border-color: #fce7f3;
+            transform: translateY(-1px);
+        }
+
+        /* 하단 인사말 */
+        .footer-message {
+            font-weight: 600;
+            color: #64748b;
+            margin-top: 8px;
+        }
+
+        /* 모바일 최적화 미디어 쿼리 */
+        @media (max-width: 480px) {
+            body {
+                padding: 16px 12px;
+            }
+
+            .card-container {
+                padding: 28px 20px;
+                border-radius: 24px;
+            }
+
+            h1 {
+                font-size: 1.35rem;
+            }
+
+            img {
+                width: 145px;
+                height: 145px;
+            }
+
+            li {
+                padding: 8px 12px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 단계별 내비게이션 탭 -->
+    <nav class="step-nav">
+        <a href="1-html.html">1단계 (HTML)</a>
+        <a href="2-css.html" class="active">2단계 (CSS)</a>
+        <a href="index.html">3단계 (JS 완성본)</a>
+    </nav>
+
+    <div class="card-container">
+        <h1>안녕하세요! 나를 소개합니다 👋</h1>
+        <hr>
+
+        <!-- 내 사진 -->
+        <h2>내 사진</h2>
+        <div>
+            <img src="profile.png" alt="내 사진" width="200">
+        </div>
+
+        <!-- 이름 -->
+        <h2>이름</h2>
+        <p><strong>홍길동</strong> (원하는 이름으로 수정하세요)</p>
+
+        <!-- 좋아하는 것 3가지 -->
+        <h2>내가 좋아하는 것 3가지</h2>
+        <ul>
+            <li>음악 듣기 🎵</li>
+            <li>맛있는 음식 먹기 🍕</li>
+            <li>친구들과 게임하기 🎮</li>
+        </ul>
+
+        <!-- 내 꿈 -->
+        <h2>나의 꿈 / 장래희망</h2>
+        <p>멋진 웹 개발자가 되어 사람들에게 편리하고 즐거운 서비스를 만드는 것이 제 꿈입니다! ✨</p>
+
+        <hr>
+        <p class="footer-message">친하게 지내요! 잘 부탁드립니다 😊</p>
+    </div>
+</body>
+</html>

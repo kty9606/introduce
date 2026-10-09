@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나를 소개합니다! - 단계별 완성본</title>
+    <style>
+        /* 밝은 파스텔톤 기본 설정 */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f0f4ff 0%, #fae8ff 50%, #fff1f2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 24px 16px;
+            color: #334155;
+            line-height: 1.6;
+        }
+
+        /* 단계별 링크 네비게이션 탭 바 */
+        .step-nav {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(8px);
+            padding: 6px;
+            border-radius: 9999px;
+            box-shadow: 0 4px 12px rgba(148, 163, 184, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            max-width: 480px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .step-nav a {
+            flex: 1;
+            text-align: center;
+            padding: 8px 12px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            text-decoration: none;
+            color: #64748b;
+            border-radius: 9999px;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .step-nav a:hover {
+            color: #4f46e5;
+            background: rgba(238, 242, 255, 0.7);
+        }
+
+        .step-nav a.active {
+            background: #6366f1;
+            color: #ffffff;
+            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.35);
+        }
+
+        /* 둥근 카드 형태 컨테이너 */
+        .card-container {
+            position: relative;
+            background: #ffffff;
+            width: 100%;
+            max-width: 480px;
+            padding: 36px 28px;
+            border-radius: 28px;
+            box-shadow: 0 16px 36px rgba(148, 163, 184, 0.18), 0 4px 12px rgba(148, 163, 184, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            text-align: center;
+        }
+
+        /* 다크모드 전환 토글 버튼 */
+        .theme-toggle-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #f1f5f9;
+            border: none;
+            cursor: pointer;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s ease, background-color 0.3s ease;
+        }
+
+        .theme-toggle-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* 메인 제목 */
+        h1 {
+            font-size: 1.55rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 12px;
+            letter-spacing: -0.02em;
+            padding-right: 32px;
+        }
+
+        /* 구분선 */
+        hr {
+            border: none;
+            height: 1.5px;
+            background: linear-gradient(to right, transparent, #e2e8f0, transparent);
+            margin: 20px 0;
+        }
+
+        /* 소제목 */
+        h2 {
+            font-size: 1.1rem;
+            color: #6366f1;
+            margin-top: 18px;
+            margin-bottom: 8px;
+            display: inline-block;
+            background-color: #eef2ff;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        /* 프로필 이미지 */
+        img {
+            display: block;
+            margin: 12px auto;
+            width: 170px;
+            height: 170px;
+            object-fit: cover;
+            border-radius: 50%;
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.18);
+            border: 4px solid #ffffff;
+            outline: 3px solid #e0e7ff;
+        }
+
+        /* 본문 문단 */
+        p {
+            font-size: 1rem;
+            color: #475569;
+            margin: 6px 0 14px;
+            word-break: keep-all;
+        }
+
+        p strong {
+            color: #0f172a;
+            font-size: 1.15rem;
+        }
+
+        /* 좋아하는 것 목록 */
+        ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin: 10px 0 18px;
+            padding: 0;
+        }
+
+        li {
+            background-color: #f8fafc;
+            border: 1px solid #f1f5f9;
+            padding: 10px 16px;
+            border-radius: 14px;
+            font-size: 0.96rem;
+            font-weight: 500;
+            color: #334155;
+            transition: all 0.2s ease;
+        }
+
+        li:hover {
+            background-color: #fdf2f8;
+            border-color: #fce7f3;
+            transform: translateY(-1px);
+        }
+
+        /* 하단 인사말 */
+        .footer-message {
+            font-weight: 600;
+            color: #64748b;
+            margin-top: 8px;
+        }
+
+        /* 방명록 영역 */
+        .guestbook-section {
+            margin-top: 24px;
+            text-align: left;
+        }
+
+        .guestbook-section h2 {
+            display: block;
+            text-align: center;
+            margin-bottom: 14px;
+        }
+
+        .guestbook-form {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .guestbook-form input,
+        .guestbook-form textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 0.92rem;
+            font-family: inherit;
+            background-color: #f8fafc;
+            color: #1e293b;
+            outline: none;
+            resize: none;
+            transition: border-color 0.2s;
+        }
+
+        .guestbook-form input:focus,
+        .guestbook-form textarea:focus {
+            border-color: #818cf8;
+            background-color: #ffffff;
+        }
+
+        .guestbook-form button {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.1s;
+        }
+
+        .guestbook-form button:hover {
+            opacity: 0.95;
+            transform: translateY(-1px);
+        }
+
+        .guestbook-form button:active {
+            transform: scale(0.98);
+        }
+
+        .guestbook-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 220px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .guestbook-item {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 10px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .guestbook-item-content {
+            flex: 1;
+        }
+
+        .guestbook-item-author {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #4f46e5;
+            margin-bottom: 2px;
+        }
+
+        .guestbook-item-text {
+            font-size: 0.9rem;
+            color: #334155;
+            word-break: break-word;
+            margin: 0;
+        }
+
+        .guestbook-item-date {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            margin-top: 4px;
+        }
+
+        .guestbook-delete-btn {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            cursor: pointer;
+            font-size: 0.85rem;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+
+        .guestbook-delete-btn:hover {
+            color: #ef4444;
+            background-color: #fee2e2;
+        }
+
+        .guestbook-empty {
+            text-align: center;
+            font-size: 0.88rem;
+            color: #94a3b8;
+            padding: 12px 0;
+        }
+
+        /* 다크모드 테마 스타일 */
+        body.dark-mode {
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #1e293b 100%);
+            color: #f1f5f9;
+        }
+
+        body.dark-mode .step-nav {
+            background: rgba(30, 41, 59, 0.85);
+            border-color: #334155;
+        }
+
+        body.dark-mode .step-nav a {
+            color: #94a3b8;
+        }
+
+        body.dark-mode .step-nav a:hover {
+            color: #e0e7ff;
+            background: rgba(49, 46, 129, 0.5);
+        }
+
+        body.dark-mode .step-nav a.active {
+            background: #6366f1;
+            color: #ffffff;
+        }
+
+        body.dark-mode .card-container {
+            background: #1e293b;
+            border-color: #334155;
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
+        }
+
+        body.dark-mode .theme-toggle-btn {
+            background: #334155;
+            color: #facc15;
+        }
+
+        body.dark-mode h1 {
+            color: #f8fafc;
+        }
+
+        body.dark-mode hr {
+            background: linear-gradient(to right, transparent, #334155, transparent);
+        }
+
+        body.dark-mode h2 {
+            background-color: #312e81;
+            color: #c7d2fe;
+        }
+
+        body.dark-mode img {
+            border-color: #1e293b;
+            outline-color: #4338ca;
+        }
+
+        body.dark-mode p {
+            color: #cbd5e1;
+        }
+
+        body.dark-mode p strong {
+            color: #ffffff;
+        }
+
+        body.dark-mode li {
+            background-color: #0f172a;
+            border-color: #334155;
+            color: #e2e8f0;
+        }
+
+        body.dark-mode li:hover {
+            background-color: #1e1b4b;
+            border-color: #4338ca;
+        }
+
+        body.dark-mode .footer-message {
+            color: #94a3b8;
+        }
+
+        body.dark-mode .guestbook-form input,
+        body.dark-mode .guestbook-form textarea {
+            background-color: #0f172a;
+            border-color: #334155;
+            color: #f8fafc;
+        }
+
+        body.dark-mode .guestbook-form input:focus,
+        body.dark-mode .guestbook-form textarea:focus {
+            border-color: #818cf8;
+            background-color: #0b1120;
+        }
+
+        body.dark-mode .guestbook-item {
+            background-color: #0f172a;
+            border-color: #334155;
+        }
+
+        body.dark-mode .guestbook-item-author {
+            color: #a5b4fc;
+        }
+
+        body.dark-mode .guestbook-item-text {
+            color: #e2e8f0;
+        }
+
+        body.dark-mode .guestbook-delete-btn:hover {
+            background-color: #450a0a;
+            color: #f87171;
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 16px 12px;
+            }
+
+            .step-nav a {
+                padding: 6px 8px;
+                font-size: 0.8rem;
+            }
+
+            .card-container {
+                padding: 28px 18px;
+                border-radius: 24px;
+            }
+
+            h1 {
+                font-size: 1.35rem;
+            }
+
+            img {
+                width: 145px;
+                height: 145px;
+            }
+
+            li {
+                padding: 8px 12px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 단계별 내비게이션 탭 -->
+    <nav class="step-nav">
+        <a href="1-html.html">1단계 (HTML)</a>
+        <a href="2-css.html">2단계 (CSS)</a>
+        <a href="index.html" class="active">3단계 (JS 완성본)</a>
+    </nav>
+
+    <div class="card-container">
+        <!-- 다크모드 토글 버튼 -->
+        <button id="themeToggle" class="theme-toggle-btn" title="테마 변경" aria-label="테마 변경">🌙</button>
+
+        <h1>안녕하세요! 나를 소개합니다 👋</h1>
+        <hr>
+
+        <!-- 내 사진 -->
+        <h2>내 사진</h2>
+        <div>
+            <img src="profile.png" alt="내 사진" width="200">
+        </div>
+
+        <!-- 이름 -->
+        <h2>이름</h2>
+        <p><strong>홍길동</strong> (원하는 이름으로 수정하세요)</p>
+
+        <!-- 좋아하는 것 3가지 -->
+        <h2>내가 좋아하는 것 3가지</h2>
+        <ul>
+            <li>음악 듣기 🎵</li>
+            <li>맛있는 음식 먹기 🍕</li>
+            <li>친구들과 게임하기 🎮</li>
+        </ul>
+
+        <!-- 내 꿈 -->
+        <h2>나의 꿈 / 장래희망</h2>
+        <p>멋진 웹 개발자가 되어 사람들에게 편리하고 즐거운 서비스를 만드는 것이 제 꿈입니다! ✨</p>
+
+        <hr>
+        <p class="footer-message">친하게 지내요! 잘 부탁드립니다 😊</p>
+
+        <!-- 방명록 섹션 -->
+        <div class="guestbook-section">
+            <hr>
+            <h2>💬 친구들의 방명록</h2>
+            <form id="guestbookForm" class="guestbook-form">
+                <input type="text" id="guestName" placeholder="작성자 이름 (예: 철수)" required maxlength="20">
+                <textarea id="guestMessage" placeholder="응원의 한마디를 남겨주세요!" rows="2" required maxlength="150"></textarea>
+                <button type="submit">방명록 남기기 ✏️</button>
+            </form>
+            <div id="guestbookList" class="guestbook-list"></div>
+        </div>
+    </div>
+
+    <!-- JavaScript 기능 -->
+    <script>
+        const themeToggleBtn = document.getElementById('themeToggle');
+        const bodyElement = document.body;
+
+        const savedTheme = localStorage.getItem('introduce_theme');
+        if (savedTheme === 'dark') {
+            bodyElement.classList.add('dark-mode');
+            themeToggleBtn.textContent = '☀️';
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            const isDark = bodyElement.classList.toggle('dark-mode');
+            themeToggleBtn.textContent = isDark ? '☀️' : '🌙';
+            localStorage.setItem('introduce_theme', isDark ? 'dark' : 'light');
+        });
+
+        const guestbookForm = document.getElementById('guestbookForm');
+        const guestNameInput = document.getElementById('guestName');
+        const guestMessageInput = document.getElementById('guestMessage');
+        const guestbookList = document.getElementById('guestbookList');
+
+        function loadGuestbook() {
+            const savedData = localStorage.getItem('introduce_guestbook');
+            if (savedData) {
+                return JSON.parse(savedData);
+            }
+            return [
+                {
+                    id: 1,
+                    name: '민수',
+                    message: '페이지가 정말 예쁘다! 이번 학기도 파이팅해보자 🔥',
+                    date: '2026. 10. 9.'
+                }
+            ];
+        }
+
+        let guestbookData = loadGuestbook();
+
+        function renderGuestbook() {
+            guestbookList.innerHTML = '';
+            if (guestbookData.length === 0) {
+                guestbookList.innerHTML = '<div class="guestbook-empty">아직 남겨진 글이 없어요. 첫 번째 주인공이 되어보세요!</div>';
+                return;
+            }
+
+            guestbookData.forEach(item => {
+                const itemEl = document.createElement('div');
+                itemEl.className = 'guestbook-item';
+                itemEl.innerHTML = `
+                    <div class="guestbook-item-content">
+                        <div class="guestbook-item-author">${escapeHtml(item.name)}</div>
+                        <p class="guestbook-item-text">${escapeHtml(item.message)}</p>
+                        <div class="guestbook-item-date">${item.date}</div>
+                    </div>
+                    <button class="guestbook-delete-btn" onclick="deleteGuestbookEntry(${item.id})" title="삭제">✕</button>
+                `;
+                guestbookList.appendChild(itemEl);
+            });
+        }
+
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        guestbookForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = guestNameInput.value.trim();
+            const message = guestMessageInput.value.trim();
+            if (!name || !message) {
+                alert('이름과 메시지를 모두 입력해주세요!');
+                return;
+            }
+
+            const now = new Date();
+            const dateStr = `${now.getFullYear()}. ${now.getMonth() + 1}. ${now.getDate()}.`;
+            const newEntry = {
+                id: Date.now(),
+                name: name,
+                message: message,
+                date: dateStr
+            };
+
+            guestbookData.unshift(newEntry);
+            localStorage.setItem('introduce_guestbook', JSON.stringify(guestbookData));
+            guestNameInput.value = '';
+            guestMessageInput.value = '';
+            renderGuestbook();
+        });
+
+        window.deleteGuestbookEntry = function(id) {
+            if (confirm('이 방명록 글을 삭제하시겠습니까?')) {
+                guestbookData = guestbookData.filter(item => item.id !== id);
+                localStorage.setItem('introduce_guestbook', JSON.stringify(guestbookData));
+                renderGuestbook();
+            }
+        };
+
+        renderGuestbook();
+    </script>
+</body>
+</html>
