@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>김태양 (@taeyang.zip) · 인스타 프로필</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+            transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+        }
+
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            background-color: #fafafa;
+            color: #262626;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 16px 40px;
+            line-height: 1.5;
+        }
+
+        /* 상단 단계별 네비게이션 알약 바 */
+        .step-nav {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 20px;
+            background: #ffffff;
+            padding: 4px;
+            border-radius: 9999px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            border: 1px solid #ebebeb;
+            max-width: 440px;
+            width: 100%;
+        }
+
+        .step-nav a {
+            flex: 1;
+            text-align: center;
+            padding: 8px 10px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            text-decoration: none;
+            color: #8e8e8e;
+            border-radius: 9999px;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            white-space: nowrap;
+        }
+
+        .step-nav a:hover {
+            color: #262626;
+        }
+
+        .step-nav a.active {
+            background: #000000;
+            color: #ffffff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        /* 인스타 앱 감성 메인 피드 컨테이너 */
+        .insta-container {
+            background: #ffffff;
+            width: 100%;
+            max-width: 440px;
+            border-radius: 28px;
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.06), 0 2px 8px rgba(0, 0, 0, 0.04);
+            border: 1px solid #efefef;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* 1. 상단 인스타 프로필 헤더 */
+        .insta-header {
+            padding: 24px 20px 16px;
+        }
+
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .username {
+            font-size: 1.15rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .badge-verified {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 17px;
+            height: 17px;
+            background: #0095f6;
+            color: white;
+            border-radius: 50%;
+            font-size: 0.65rem;
+            font-weight: 900;
+        }
+
+        /* 다크모드 토글 버튼 */
+        .theme-toggle-btn {
+            background: #f1f5f9;
+            border: none;
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease, background-color 0.25s ease;
+        }
+
+        .theme-toggle-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .profile-row {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        /* 인스타 스토리 링 프로필 이미지 */
+        .story-ring-wrap {
+            position: relative;
+            padding: 3.5px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            flex-shrink: 0;
+            cursor: pointer;
+            transition: transform 0.25s ease;
+        }
+
+        .story-ring-wrap:hover {
+            transform: scale(1.04);
+        }
+
+        .story-ring-wrap img {
+            width: 84px;
+            height: 84px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 3px solid #ffffff;
+            background: #f0f0f0;
+        }
+
+        /* 게시물 / 친구 / 친화력 카운터 */
+        .stats-wrap {
+            display: flex;
+            flex: 1;
+            justify-content: space-around;
+            text-align: center;
+        }
+
+        .stat-item .num {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: #262626;
+            display: block;
+        }
+
+        .stat-item .label {
+            font-size: 0.76rem;
+            color: #8e8e8e;
+            font-weight: 500;
+        }
+
+        /* 바이오 & 소개 텍스트 */
+        .bio-section {
+            margin-top: 16px;
+        }
+
+        .real-name {
+            font-size: 0.98rem;
+            font-weight: 700;
+            color: #262626;
+        }
+
+        .mbti-pill {
+            display: inline-block;
+            background: #f2f4f8;
+            color: #385185;
+            font-size: 0.78rem;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 8px;
+            margin: 4px 0 8px;
+        }
+
+        .bio-text {
+            font-size: 0.9rem;
+            color: #444;
+            line-height: 1.45;
+            word-break: keep-all;
+        }
+
+        /* 힙한 해시태그 칩 */
+        .tag-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 10px;
+        }
+
+        .tag-chip {
+            color: #00376b;
+            font-size: 0.82rem;
+            font-weight: 600;
+        }
+
+        /* 프로필 액션 버튼 (친구 맺기 / 메시지) */
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .btn-follow {
+            flex: 1;
+            background: #0095f6;
+            color: white;
+            font-weight: 600;
+            font-size: 0.88rem;
+            padding: 8px 0;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+            transition: background 0.2s;
+        }
+
+        .btn-follow:hover {
+            background: #1877f2;
+        }
+
+        .btn-sub {
+            background: #efefef;
+            color: #262626;
+            font-weight: 600;
+            font-size: 0.88rem;
+            padding: 8px 14px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-sub:hover {
+            background: #dbdbdb;
+        }
+
+        /* 2. 스토리 하이라이트 원형 아이콘 */
+        .highlights-scroll {
+            display: flex;
+            gap: 16px;
+            padding: 12px 20px 18px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .highlights-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .highlight-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .highlight-icon {
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            background: #f8fafc;
+            border: 1.5px solid #dbdbdb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.45rem;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .highlight-item:hover .highlight-icon {
+            transform: scale(1.08);
+            border-color: #8e8e8e;
+        }
+
+        .highlight-label {
+            font-size: 0.74rem;
+            color: #262626;
+            font-weight: 500;
+        }
+
+        /* 3. 본문 피드 영역 */
+        .feed-body {
+            padding: 20px;
+        }
+
+        /* 인생네컷 / 포토부스 감성 카드 */
+        .photo-booth-card {
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 16px;
+            padding: 12px 12px 16px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+            margin-bottom: 24px;
+            transition: transform 0.3s ease;
+        }
+
+        .photo-booth-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .photo-booth-img-wrap {
+            position: relative;
+            width: 100%;
+            height: 280px;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #f4f4f4;
+        }
+
+        .photo-booth-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 25%;
+            display: block;
+        }
+
+        .photo-tag {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(4px);
+            color: white;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 6px;
+        }
+
+        .photo-booth-footer {
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 4px;
+        }
+
+        .photo-booth-title {
+            font-size: 0.82rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            color: #555;
+            text-transform: uppercase;
+        }
+
+        .photo-booth-date {
+            font-size: 0.74rem;
+            color: #999;
+            font-family: monospace;
+        }
+
+        /* 섹션 헤더 타이틀 */
+        .section-header {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: #262626;
+            margin: 20px 0 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* 4. 취향 2x2 그리드 타일 */
+        .favorite-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 22px;
+        }
+
+        .fav-tile {
+            background: #f9f9fb;
+            border: 1px solid #f0f0f3;
+            border-radius: 16px;
+            padding: 14px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .fav-tile:hover {
+            background: #ffffff;
+            border-color: #e2e8f0;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+            transform: translateY(-2px);
+        }
+
+        .fav-tile-icon {
+            font-size: 1.5rem;
+        }
+
+        .fav-tile-title {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: #1e293b;
+        }
+
+        .fav-tile-desc {
+            font-size: 0.76rem;
+            color: #64748b;
+        }
+
+        /* 5. 꿈 하이라이트 인스타 릴스 배너 */
+        .dream-banner {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #db2777 100%);
+            border-radius: 18px;
+            padding: 18px;
+            color: #ffffff;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 24px rgba(124, 58, 237, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dream-banner::after {
+            content: "✨";
+            position: absolute;
+            right: 12px;
+            bottom: 8px;
+            font-size: 2.8rem;
+            opacity: 0.22;
+        }
+
+        .dream-tag {
+            font-size: 0.72rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(6px);
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+
+        .dream-title {
+            font-size: 1.12rem;
+            font-weight: 800;
+            margin-bottom: 6px;
+            letter-spacing: -0.01em;
+        }
+
+        .dream-text {
+            font-size: 0.84rem;
+            opacity: 0.92;
+            line-height: 1.45;
+            word-break: keep-all;
+        }
+
+        /* 6. 인스타 스토리 '무물' 질문 스티커 방명록 */
+        .ask-sticker {
+            background: #ffffff;
+            border: 2px solid #262626;
+            border-radius: 20px;
+            padding: 16px;
+            box-shadow: 4px 4px 0px #262626;
+            margin-bottom: 20px;
+        }
+
+        .ask-sticker-header {
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .ask-sticker-title {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: #262626;
+        }
+
+        .ask-sticker-sub {
+            font-size: 0.74rem;
+            color: #8e8e8e;
+            margin-top: 2px;
+        }
+
+        .sticker-form {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .sticker-input,
+        .sticker-textarea {
+            width: 100%;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 10px 12px;
+            font-family: inherit;
+            font-size: 0.88rem;
+            outline: none;
+            transition: all 0.2s;
+            color: #262626;
+        }
+
+        .sticker-input:focus,
+        .sticker-textarea:focus {
+            background: #ffffff;
+            border-color: #000000;
+        }
+
+        .sticker-submit-btn {
+            background: #000000;
+            color: #ffffff;
+            border: none;
+            border-radius: 12px;
+            padding: 10px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.1s;
+        }
+
+        .sticker-submit-btn:hover {
+            opacity: 0.88;
+        }
+
+        .sticker-submit-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* 7. 인스타 스타일 댓글 피드 */
+        .comments-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .comment-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #f2f2f2;
+        }
+
+        .comment-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #e0e7ff, #fce7f3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .comment-body {
+            flex: 1;
+        }
+
+        .comment-author {
+            font-size: 0.84rem;
+            font-weight: 700;
+            color: #262626;
+            margin-right: 6px;
+        }
+
+        .comment-text {
+            font-size: 0.85rem;
+            color: #333;
+            display: inline;
+            word-break: break-word;
+        }
+
+        .comment-meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 4px;
+            font-size: 0.72rem;
+            color: #8e8e8e;
+            font-weight: 500;
+        }
+
+        .comment-delete-link {
+            background: none;
+            border: none;
+            color: #999;
+            font-size: 0.72rem;
+            cursor: pointer;
+        }
+
+        .comment-delete-link:hover {
+            color: #ef4444;
+            text-decoration: underline;
+        }
+
+        .comment-heart {
+            background: none;
+            border: none;
+            color: #8e8e8e;
+            cursor: pointer;
+            font-size: 0.95rem;
+            padding: 4px;
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            flex-shrink: 0;
+        }
+
+        .comment-heart.liked {
+            color: #ed4956;
+            animation: heartPop 0.3s ease;
+        }
+
+        @keyframes heartPop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.35); }
+            100% { transform: scale(1); }
+        }
+
+        .footer-note {
+            text-align: center;
+            padding: 24px 0 12px;
+            font-size: 0.76rem;
+            color: #8e8e8e;
+            font-weight: 500;
+        }
+
+        /* ===== 인스타그램 감성 다크모드 ===== */
+        body.dark-mode {
+            background-color: #000000;
+            color: #f5f5f5;
+        }
+
+        body.dark-mode .step-nav {
+            background: #121212;
+            border-color: #262626;
+        }
+
+        body.dark-mode .step-nav a {
+            color: #a8a8a8;
+        }
+
+        body.dark-mode .step-nav a.active {
+            background: #ffffff;
+            color: #000000;
+        }
+
+        body.dark-mode .insta-container {
+            background: #121212;
+            border-color: #262626;
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6);
+        }
+
+        body.dark-mode .theme-toggle-btn {
+            background: #262626;
+            color: #facc15;
+        }
+
+        body.dark-mode .username,
+        body.dark-mode .real-name,
+        body.dark-mode .stat-item .num,
+        body.dark-mode .section-header,
+        body.dark-mode .highlight-label,
+        body.dark-mode .fav-tile-title,
+        body.dark-mode .comment-author {
+            color: #f5f5f5;
+        }
+
+        body.dark-mode .story-ring-wrap img {
+            border-color: #121212;
+        }
+
+        body.dark-mode .mbti-pill {
+            background: #1e293b;
+            color: #93c5fd;
+        }
+
+        body.dark-mode .bio-text,
+        body.dark-mode .comment-text {
+            color: #d4d4d4;
+        }
+
+        body.dark-mode .tag-chip {
+            color: #60a5fa;
+        }
+
+        body.dark-mode .btn-sub {
+            background: #262626;
+            color: #f5f5f5;
+        }
+
+        body.dark-mode .btn-sub:hover {
+            background: #363636;
+        }
+
+        body.dark-mode .highlights-scroll {
+            border-color: #262626;
+        }
+
+        body.dark-mode .highlight-icon {
+            background: #1e1e1e;
+            border-color: #333333;
+        }
+
+        body.dark-mode .photo-booth-card {
+            background: #1e1e1e;
+            border-color: #2a2a2a;
+        }
+
+        body.dark-mode .photo-booth-title {
+            color: #a3a3a3;
+        }
+
+        body.dark-mode .fav-tile {
+            background: #1a1a1a;
+            border-color: #262626;
+        }
+
+        body.dark-mode .fav-tile:hover {
+            background: #222222;
+            border-color: #3b3b3b;
+        }
+
+        body.dark-mode .fav-tile-desc {
+            color: #94a3b8;
+        }
+
+        body.dark-mode .ask-sticker {
+            background: #1e1e1e;
+            border-color: #f5f5f5;
+            box-shadow: 4px 4px 0px #f5f5f5;
+        }
+
+        body.dark-mode .ask-sticker-title {
+            color: #f5f5f5;
+        }
+
+        body.dark-mode .sticker-input,
+        body.dark-mode .sticker-textarea {
+            background: #121212;
+            border-color: #333333;
+            color: #f5f5f5;
+        }
+
+        body.dark-mode .sticker-submit-btn {
+            background: #ffffff;
+            color: #000000;
+        }
+
+        body.dark-mode .comment-item {
+            border-color: #1e1e1e;
+        }
+
+        body.dark-mode .comment-avatar {
+            background: linear-gradient(135deg, #312e81, #4c1d95);
+        }
+    </style>
+</head>
+<body>
+    <!-- 상단 단계별 내비게이션 알약 탭 -->
+    <nav class="step-nav">
+        <a href="1-html.html">1단계 (HTML)</a>
+        <a href="2-css.html">2단계 (CSS)</a>
+        <a href="index.html" class="active">3단계 (JS 완성본)</a>
+    </nav>
+
+    <div class="insta-container">
+        <!-- 1. 인스타 헤더 -->
+        <header class="insta-header">
+            <div class="top-bar">
+                <div class="username">
+                    taeyang.zip
+                    <span class="badge-verified" title="인증 배지">✓</span>
+                </div>
+                <!-- 다크모드 토글 버튼 -->
+                <button id="themeToggle" class="theme-toggle-btn" title="테마 변경" aria-label="테마 변경">🌙</button>
+            </div>
+
+            <div class="profile-row">
+                <!-- 인스타 스토리 링 프로필 -->
+                <div class="story-ring-wrap" id="profileStoryBtn" title="스토리 보기">
+                    <img src="profile.png" alt="김태양 프로필 사진">
+                </div>
+
+                <!-- 인스타 스탯 바 -->
+                <div class="stats-wrap">
+                    <div class="stat-item">
+                        <span class="num">12</span>
+                        <span class="label">게시물</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="num">999+</span>
+                        <span class="label">친구들</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="num">100%</span>
+                        <span class="label">친화력</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 바이오 소개 -->
+            <div class="bio-section">
+                <div class="real-name">김태양 ☀️</div>
+                <span class="mbti-pill">ESFJ · 다정하고 따뜻한 힐러형</span>
+                <p class="bio-text">
+                    주변 사람들에게 따뜻한 온기와 밝은 에너지를 전하는 걸 좋아해요! 함께 맛집 가고 이야기 나눌 친구 언제나 환영 ☕🍕
+                </p>
+                <div class="tag-chips">
+                    <span class="tag-chip">#햇살처럼_따스한</span>
+                    <span class="tag-chip">#다정한_경청러</span>
+                    <span class="tag-chip">#믿음직한_친구</span>
+                    <span class="tag-chip">#세심한_배려</span>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn-follow" id="followBtn">친해지기 🤝</button>
+                    <button class="btn-sub" onclick="document.getElementById('guestMessage').focus()">메시지 💬</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- 2. 스토리 하이라이트 원형 아이콘들 -->
+        <div class="highlights-scroll">
+            <div class="highlight-item" onclick="scrollToSection('favoriteGrid')">
+                <div class="highlight-icon">🏄‍♂️</div>
+                <span class="highlight-label">액티비티</span>
+            </div>
+            <div class="highlight-item" onclick="scrollToSection('favoriteGrid')">
+                <div class="highlight-icon">🤍</div>
+                <span class="highlight-label">내사람들</span>
+            </div>
+            <div class="highlight-item" onclick="scrollToSection('favoriteGrid')">
+                <div class="highlight-icon">☕</div>
+                <span class="highlight-label">카페투어</span>
+            </div>
+            <div class="highlight-item" onclick="scrollToSection('favoriteGrid')">
+                <div class="highlight-icon">🍕</div>
+                <span class="highlight-label">맛집탐방</span>
+            </div>
+            <div class="highlight-item" onclick="scrollToSection('dreamBanner')">
+                <div class="highlight-icon">💻</div>
+                <span class="highlight-label">코딩러</span>
+            </div>
+        </div>
+
+        <!-- 3. 메인 피드 바디 -->
+        <main class="feed-body">
+            <!-- 인생네컷 / 포토부스 감성 카드 -->
+            <div class="photo-booth-card">
+                <div class="photo-booth-img-wrap">
+                    <img src="profile.png" alt="김태양 인생네컷 사진">
+                    <span class="photo-tag">PHOTOBOOTH</span>
+                </div>
+                <div class="photo-booth-footer">
+                    <span class="photo-booth-title">TAEYANG'S MOMENT 📸</span>
+                    <span class="photo-booth-date">2026. 10. 13</span>
+                </div>
+            </div>
+
+            <!-- 취향 2x2 그리드 타일 -->
+            <div class="section-header" id="favoriteGrid">
+                <span>내가 좋아하는 것들</span> 💖
+            </div>
+            <div class="favorite-grid">
+                <div class="fav-tile">
+                    <div class="fav-tile-icon">🏄‍♂️</div>
+                    <div class="fav-tile-title">신나는 액티비티</div>
+                    <div class="fav-tile-desc">에너지 넘치게 땀 흘리고 노는 시간!</div>
+                </div>
+                <div class="fav-tile">
+                    <div class="fav-tile-icon">🤍</div>
+                    <div class="fav-tile-title">소중한 사람들</div>
+                    <div class="fav-tile-desc">함께 있으면 편안해지는 친구들과의 시간</div>
+                </div>
+                <div class="fav-tile">
+                    <div class="fav-tile-icon">☕</div>
+                    <div class="fav-tile-title">감성 카페 투어</div>
+                    <div class="fav-tile-desc">분위기 좋은 곳에서 즐기는 커피 한잔</div>
+                </div>
+                <div class="fav-tile">
+                    <div class="fav-tile-icon">🍕</div>
+                    <div class="fav-tile-title">소문난 맛집 탐방</div>
+                    <div class="fav-tile-desc">맛있는 음식 먹으며 힐링하기</div>
+                </div>
+            </div>
+
+            <!-- 꿈 하이라이트 릴스 배너 -->
+            <div class="dream-banner" id="dreamBanner">
+                <span class="dream-tag">MY BIG DREAM</span>
+                <div class="dream-title">취미로 일하는 개발자 💻✨</div>
+                <div class="dream-text">
+                    일에 쫓기지 않고, 즐겁고 여유롭게 코딩하며 소중한 사람들과 행복을 나누는 멋진 사람이 되는 것이 제 꿈입니다!
+                </div>
+            </div>
+
+            <!-- 인스타 스토리 '무물' 질문 스티커 방명록 -->
+            <div class="ask-sticker">
+                <div class="ask-sticker-header">
+                    <div class="ask-sticker-title">태양에게 한마디 남기기 💌</div>
+                    <div class="ask-sticker-sub">무엇이든 응원의 메시지를 보내주세요!</div>
+                </div>
+                <form id="guestbookForm" class="sticker-form">
+                    <input type="text" id="guestName" class="sticker-input" placeholder="작성자 이름 (예: 지우)" required maxlength="20">
+                    <textarea id="guestMessage" class="sticker-textarea" placeholder="남길 메시지 입력..." rows="2" required maxlength="150"></textarea>
+                    <button type="submit" class="sticker-submit-btn">보내기 🚀</button>
+                </form>
+            </div>
+
+            <!-- 인스타 스타일 댓글 피드 -->
+            <div class="section-header">
+                <span>친구들의 한마디</span> 💬
+            </div>
+            <div id="commentsList" class="comments-list">
+                <!-- 자바스크립트로 댓글이 동적으로 렌더링됩니다 -->
+            </div>
+
+            <div class="footer-note">
+                친하게 지내요! 잘 부탁드립니다 😊 · @taeyang.zip
+            </div>
+        </main>
+    </div>
+
+    <!-- JavaScript 로직 -->
+    <script>
+        /* 1. 다크모드 토글 */
+        const themeToggleBtn = document.getElementById('themeToggle');
+        const bodyElement = document.body;
+
+        const savedTheme = localStorage.getItem('introduce_theme');
+        if (savedTheme === 'dark') {
+            bodyElement.classList.add('dark-mode');
+            themeToggleBtn.textContent = '☀️';
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            const isDark = bodyElement.classList.toggle('dark-mode');
+            themeToggleBtn.textContent = isDark ? '☀️' : '🌙';
+            localStorage.setItem('introduce_theme', isDark ? 'dark' : 'light');
+        });
+
+        /* 2. 친해지기 버튼 인터랙션 */
+        const followBtn = document.getElementById('followBtn');
+        let isFollowed = false;
+        followBtn.addEventListener('click', () => {
+            isFollowed = !isFollowed;
+            if (isFollowed) {
+                followBtn.textContent = '친구 완료! 🎉';
+                followBtn.style.background = '#22c55e';
+            } else {
+                followBtn.textContent = '친해지기 🤝';
+                followBtn.style.background = '#0095f6';
+            }
+        });
+
+        /* 3. 부드러운 스크롤 함수 */
+        function scrollToSection(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        /* 4. 방명록 & 인스타 댓글 기능 */
+        const guestbookForm = document.getElementById('guestbookForm');
+        const guestNameInput = document.getElementById('guestName');
+        const guestMessageInput = document.getElementById('guestMessage');
+        const commentsList = document.getElementById('commentsList');
+
+        const AVATARS = ['🌸', '🥑', '🐶', '🦊', '🐻', '🐼', '🐰', '🍀', '✨', '⚡'];
+
+        function getRandomAvatar() {
+            return AVATARS[Math.floor(Math.random() * AVATARS.length)];
+        }
+
+        function loadGuestbook() {
+            const savedData = localStorage.getItem('introduce_guestbook_v2');
+            if (savedData) {
+                return JSON.parse(savedData);
+            }
+            return [
+                {
+                    id: 1,
+                    avatar: '🌸',
+                    name: '지우',
+                    message: '태양아! 이름처럼 늘 주변 사람들에게 따뜻하고 밝은 에너지를 줘서 고마워 ☀️ 이번 주말에 카페 투어 꼭 가자!',
+                    date: '방금 전',
+                    likes: 5,
+                    isLiked: false
+                }
+            ];
+        }
+
+        let guestbookData = loadGuestbook();
+
+        function renderComments() {
+            commentsList.innerHTML = '';
+            if (guestbookData.length === 0) {
+                commentsList.innerHTML = '<div style="text-align: center; color: #8e8e8e; font-size: 0.82rem; padding: 16px 0;">아직 댓글이 없어요. 첫 번째 친구가 되어보세요! 💌</div>';
+                return;
+            }
+
+            guestbookData.forEach(item => {
+                const itemEl = document.createElement('div');
+                itemEl.className = 'comment-item';
+                itemEl.innerHTML = `
+                    <div class="comment-avatar">${item.avatar || '✨'}</div>
+                    <div class="comment-body">
+                        <div>
+                            <span class="comment-author">${escapeHtml(item.name)}</span>
+                            <p class="comment-text">${escapeHtml(item.message)}</p>
+                        </div>
+                        <div class="comment-meta">
+                            <span>${item.date}</span>
+                            <span>좋아요 ${item.likes || 0}개</span>
+                            <button class="comment-delete-link" onclick="deleteComment(${item.id})">삭제</button>
+                        </div>
+                    </div>
+                    <button class="comment-heart ${item.isLiked ? 'liked' : ''}" onclick="toggleLike(${item.id})" title="좋아요">
+                        ${item.isLiked ? '❤️' : '🤍'}
+                    </button>
+                `;
+                commentsList.appendChild(itemEl);
+            });
+        }
+
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        guestbookForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = guestNameInput.value.trim();
+            const message = guestMessageInput.value.trim();
+
+            if (!name || !message) {
+                alert('이름과 메시지를 모두 입력해주세요!');
+                return;
+            }
+
+            const newEntry = {
+                id: Date.now(),
+                avatar: getRandomAvatar(),
+                name: name,
+                message: message,
+                date: '방금 전',
+                likes: 0,
+                isLiked: false
+            };
+
+            guestbookData.unshift(newEntry);
+            saveData();
+            guestNameInput.value = '';
+            guestMessageInput.value = '';
+            renderComments();
+        });
+
+        window.toggleLike = function(id) {
+            const comment = guestbookData.find(c => c.id === id);
+            if (comment) {
+                comment.isLiked = !comment.isLiked;
+                comment.likes = comment.isLiked ? (comment.likes + 1) : Math.max(0, comment.likes - 1);
+                saveData();
+                renderComments();
+            }
+        };
+
+        window.deleteComment = function(id) {
+            if (confirm('이 댓글을 삭제할까요?')) {
+                guestbookData = guestbookData.filter(c => c.id !== id);
+                saveData();
+                renderComments();
+            }
+        };
+
+        function saveData() {
+            localStorage.setItem('introduce_guestbook_v2', JSON.stringify(guestbookData));
+        }
+
+        renderComments();
+    </script>
+</body>
+</html>
