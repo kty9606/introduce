@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>김태양 소개 페이지 목차</title>
+  <style>
+    :root {
+      --bg-gradient: linear-gradient(135deg, #fdfbfb 0%, #f3f0ff 50%, #e8f4ff 100%);
+      --card-bg: rgba(255, 255, 255, 0.88);
+      --card-border: rgba(255, 255, 255, 0.9);
+      --item-bg: #ffffff;
+      --item-border: #f0f0f3;
+      --item-hover-border: #c7d2fe;
+      --text-main: #18181b;
+      --text-sub: #52525b;
+      --accent-gradient: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+      --btn-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+      --pill-bg: #f4f4f5;
+      --avatar-border: #ffffff;
+      --shadow-soft: 0 10px 30px -10px rgba(24, 24, 27, 0.08);
+      --shadow-hover: 0 16px 36px -12px rgba(99, 102, 241, 0.22);
+    }
+
+    [data-theme="dark"] {
+      --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #111827 100%);
+      --card-bg: rgba(30, 41, 59, 0.82);
+      --card-border: rgba(255, 255, 255, 0.1);
+      --item-bg: rgba(15, 23, 42, 0.72);
+      --item-border: rgba(255, 255, 255, 0.08);
+      --item-hover-border: rgba(129, 140, 248, 0.55);
+      --text-main: #f8fafc;
+      --text-sub: #cbd5e1;
+      --pill-bg: rgba(51, 65, 85, 0.75);
+      --avatar-border: #1e293b;
+      --shadow-soft: 0 10px 30px -10px rgba(0, 0, 0, 0.45);
+      --shadow-hover: 0 16px 36px -12px rgba(99, 102, 241, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+      padding: 32px 16px 48px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 680px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* 상단 프로필 헤더 */
+    header {
+      background: var(--card-bg);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--card-border);
+      border-radius: 28px;
+      padding: 24px 24px 32px;
+      text-align: center;
+      box-shadow: var(--shadow-soft);
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 12px;
+    }
+
+    .theme-toggle {
+      background: var(--pill-bg);
+      color: var(--text-main);
+      border: 1px solid var(--card-border);
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: transform 0.15s ease, background 0.2s ease;
+    }
+
+    .theme-toggle:hover {
+      transform: translateY(-1px);
+    }
+
+    .avatar-ring {
+      padding: 4px;
+      border-radius: 50%;
+      background: var(--accent-gradient);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 20px rgba(220, 39, 67, 0.2);
+      margin-bottom: 16px;
+    }
+
+    .avatar-ring img {
+      width: 108px;
+      height: 108px;
+      border-radius: 50%;
+      object-fit: cover;
+      background-color: var(--pill-bg);
+      border: 4px solid var(--avatar-border);
+      display: block;
+    }
+
+    header h1 {
+      font-size: 1.65rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+    }
+
+    header p {
+      color: var(--text-sub);
+      font-size: 0.98rem;
+    }
+
+    /* 목차 카드 */
+    main {
+      background: var(--card-bg);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--card-border);
+      border-radius: 26px;
+      padding: 24px;
+      box-shadow: var(--shadow-soft);
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+
+    .section-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-sub);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .page-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .page-card {
+      background: var(--item-bg);
+      border: 1px solid var(--item-border);
+      border-radius: 20px;
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .page-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--item-hover-border);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .page-info {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 0;
+    }
+
+    .page-badge {
+      display: inline-block;
+      align-self: flex-start;
+      background: var(--pill-bg);
+      color: var(--text-sub);
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+
+    .page-info h2 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .page-info p {
+      font-size: 0.9rem;
+      color: var(--text-sub);
+    }
+
+    .nav-btn {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      background: var(--btn-gradient);
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 700;
+      padding: 12px 18px;
+      border-radius: 14px;
+      box-shadow: 0 8px 18px -6px rgba(99, 102, 241, 0.45);
+      transition: opacity 0.2s ease, transform 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .nav-btn:hover {
+      opacity: 0.92;
+      transform: translateY(-1px);
+    }
+
+    footer {
+      background: var(--btn-gradient);
+      color: #ffffff;
+      border-radius: 24px;
+      padding: 18px 24px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 0.95rem;
+      box-shadow: 0 10px 25px -8px rgba(99, 102, 241, 0.45);
+    }
+
+    /* 모바일 반응형 */
+    @media (max-width: 600px) {
+      body {
+        padding: 20px 14px 36px;
+      }
+
+      header {
+        padding: 20px 18px 24px;
+        border-radius: 24px;
+      }
+
+      .avatar-ring img {
+        width: 92px;
+        height: 92px;
+      }
+
+      header h1 {
+        font-size: 1.38rem;
+      }
+
+      main {
+        padding: 20px 16px;
+        border-radius: 22px;
+      }
+
+      .page-card {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 18px 16px;
+        gap: 14px;
+      }
+
+      .nav-btn {
+        width: 100%;
+        padding: 13px 16px;
+      }
+
+      footer {
+        font-size: 0.9rem;
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="header-top">
+        <button type="button" class="theme-toggle" id="themeToggle" aria-pressed="false">
+          🌙 다크모드
+        </button>
+      </div>
+      <div class="avatar-ring">
+        <img src="profile.jpg" alt="김태양의 프로필 사진">
+      </div>
+      <h1>김태양의 자기소개 모음 📁</h1>
+      <p>HTML부터 CSS, JavaScript까지 단계별로 만든 페이지를 구경해 봐!</p>
+    </header>
+
+    <main>
+      <div class="section-title">페이지 목차 🗂️</div>
+      <ul class="page-list">
+        <li class="page-card">
+          <div class="page-info">
+            <span class="page-badge">STEP 1 · HTML</span>
+            <h2>순수 HTML 자기소개 페이지</h2>
+            <p>CSS와 JavaScript 없이 HTML 태그만으로 만든 기본 버전</p>
+          </div>
+          <a class="nav-btn" href="1-html.html">1-html.html 열기 →</a>
+        </li>
+
+        <li class="page-card">
+          <div class="page-info">
+            <span class="page-badge">STEP 2 · CSS</span>
+            <h2>SNS 벤토 스타일 자기소개</h2>
+            <p>벤토 그리드와 스토리 링, 모바일 반응형 디자인을 적용한 버전</p>
+          </div>
+          <a class="nav-btn" href="2-css.html">2-css.html 열기 →</a>
+        </li>
+
+        <li class="page-card">
+          <div class="page-info">
+            <span class="page-badge">STEP 3 · JavaScript</span>
+            <h2>인터랙티브 자기소개 &amp; 방명록</h2>
+            <p>다크모드 전환과 좋아요/싫어요 방명록 기능이 들어간 완성 버전</p>
+          </div>
+          <a class="nav-btn" href="3-js.html">3-js.html 열기 →</a>
+        </li>
+      </ul>
+    </main>
+
+    <footer>
+      <p>원하는 단계의 버튼을 눌러서 페이지를 확인해 봐! 😊</p>
+    </footer>
+  </div>
+
+  <script>
+    const themeToggle = document.getElementById('themeToggle');
+    const root = document.documentElement;
+    const THEME_KEY = 'taeyang_intro_theme';
+
+    function applyTheme(theme) {
+      if (theme === 'dark') {
+        root.setAttribute('data-theme', 'dark');
+        themeToggle.textContent = '☀️ 라이트모드';
+        themeToggle.setAttribute('aria-pressed', 'true');
+      } else {
+        root.removeAttribute('data-theme');
+        themeToggle.textContent = '🌙 다크모드';
+        themeToggle.setAttribute('aria-pressed', 'false');
+      }
+    }
+
+    const savedTheme = localStorage.getItem(THEME_KEY) || 'light';
+    applyTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const isDark = root.getAttribute('data-theme') === 'dark';
+      const nextTheme = isDark ? 'light' : 'dark';
+      localStorage.setItem(THEME_KEY, nextTheme);
+      applyTheme(nextTheme);
+    });
+  </script>
+</body>
+</html>

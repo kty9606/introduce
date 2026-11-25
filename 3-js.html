@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>안녕! 나는 김태양이야</title>
+  <style>
+    :root {
+      --bg-gradient: linear-gradient(135deg, #fdfbfb 0%, #f3f0ff 50%, #e8f4ff 100%);
+      --card-bg: rgba(255, 255, 255, 0.88);
+      --card-border: rgba(255, 255, 255, 0.9);
+      --item-bg: #ffffff;
+      --item-border: #f0f0f3;
+      --item-hover-border: #d4d4ff;
+      --text-main: #18181b;
+      --text-sub: #52525b;
+      --accent-gradient: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+      --pill-bg: #f4f4f5;
+      --input-bg: #ffffff;
+      --input-border: #e4e4e7;
+      --avatar-border: #ffffff;
+      --shadow-soft: 0 10px 30px -10px rgba(24, 24, 27, 0.08);
+      --shadow-hover: 0 16px 36px -12px rgba(99, 102, 241, 0.18);
+    }
+
+    [data-theme="dark"] {
+      --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #111827 100%);
+      --card-bg: rgba(30, 41, 59, 0.82);
+      --card-border: rgba(255, 255, 255, 0.1);
+      --item-bg: rgba(15, 23, 42, 0.7);
+      --item-border: rgba(255, 255, 255, 0.08);
+      --item-hover-border: rgba(129, 140, 248, 0.5);
+      --text-main: #f8fafc;
+      --text-sub: #cbd5e1;
+      --pill-bg: rgba(51, 65, 85, 0.75);
+      --input-bg: rgba(15, 23, 42, 0.85);
+      --input-border: rgba(148, 163, 184, 0.25);
+      --avatar-border: #1e293b;
+      --shadow-soft: 0 10px 30px -10px rgba(0, 0, 0, 0.45);
+      --shadow-hover: 0 16px 36px -12px rgba(99, 102, 241, 0.3);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+      padding: 32px 16px 48px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 680px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    hr {
+      display: none;
+    }
+
+    /* 상단 SNS 프로필 헤더 */
+    header {
+      position: relative;
+      background: var(--card-bg);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--card-border);
+      border-radius: 28px;
+      padding: 32px 24px;
+      text-align: center;
+      box-shadow: var(--shadow-soft);
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 12px;
+    }
+
+    .theme-toggle {
+      background: var(--pill-bg);
+      color: var(--text-main);
+      border: 1px solid var(--card-border);
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: transform 0.15s ease, background 0.2s ease;
+    }
+
+    .theme-toggle:hover {
+      transform: translateY(-1px);
+    }
+
+    header h1 {
+      font-size: 1.65rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+    }
+
+    header p {
+      color: var(--text-sub);
+      font-size: 1rem;
+    }
+
+    /* 메인 벤토 그리드 */
+    main {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    section {
+      background: var(--card-bg);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: var(--shadow-soft);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease, border-color 0.3s ease;
+    }
+
+    section:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    section h2 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-sub);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* 사진 카드 (스토리 링 스타일) */
+    .photo-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .photo-card h2 {
+      align-self: flex-start;
+    }
+
+    figure {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .avatar-ring {
+      padding: 4px;
+      border-radius: 50%;
+      background: var(--accent-gradient);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 20px rgba(220, 39, 67, 0.2);
+    }
+
+    img {
+      width: 168px;
+      height: 168px;
+      border-radius: 50%;
+      object-fit: cover;
+      background-color: var(--pill-bg);
+      border: 4px solid var(--avatar-border);
+      display: block;
+      font-size: 0.85rem;
+      color: var(--text-sub);
+      text-align: center;
+    }
+
+    figcaption {
+      font-size: 0.85rem;
+      color: var(--text-sub);
+      background: var(--pill-bg);
+      padding: 6px 14px;
+      border-radius: 999px;
+    }
+
+    /* 기본 정보 카드 */
+    .info-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .info-card li {
+      background: var(--pill-bg);
+      padding: 14px 16px;
+      border-radius: 16px;
+      font-size: 0.98rem;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .info-card li strong {
+      font-size: 0.8rem;
+      color: var(--text-sub);
+      font-weight: 600;
+    }
+
+    /* 좋아하는 것 3가지 (전체 너비 벤토 카드) */
+    .favorites-card {
+      grid-column: 1 / -1;
+    }
+
+    .favorites-card ol {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .favorites-card li {
+      background: var(--item-bg);
+      border: 1px solid var(--item-border);
+      border-radius: 20px;
+      padding: 18px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .favorites-card li:hover {
+      transform: translateY(-2px);
+      border-color: var(--item-hover-border);
+    }
+
+    .favorites-card li strong {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .favorites-card li p {
+      font-size: 0.9rem;
+      color: var(--text-sub);
+      line-height: 1.5;
+    }
+
+    /* 방명록 카드 (전체 너비 벤토 카드) */
+    .guestbook-card {
+      grid-column: 1 / -1;
+    }
+
+    .guestbook-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .guestbook-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .guestbook-form input,
+    .guestbook-form textarea {
+      width: 100%;
+      background: var(--input-bg);
+      color: var(--text-main);
+      border: 1px solid var(--input-border);
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+
+    .guestbook-form input:focus,
+    .guestbook-form textarea:focus {
+      border-color: #6366f1;
+    }
+
+    .guestbook-form textarea {
+      resize: vertical;
+      min-height: 76px;
+    }
+
+    .guestbook-submit {
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+      color: #ffffff;
+      border: none;
+      border-radius: 14px;
+      padding: 12px 20px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: opacity 0.2s ease, transform 0.15s ease;
+    }
+
+    .guestbook-submit:hover {
+      opacity: 0.92;
+      transform: translateY(-1px);
+    }
+
+    .guestbook-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .guestbook-item {
+      background: var(--item-bg);
+      border: 1px solid var(--item-border);
+      border-radius: 16px;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .guestbook-item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .guestbook-author {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text-main);
+    }
+
+    .guestbook-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .guestbook-date {
+      font-size: 0.78rem;
+      color: var(--text-sub);
+    }
+
+    .guestbook-delete {
+      background: var(--pill-bg);
+      color: var(--text-sub);
+      border: none;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 0.75rem;
+      cursor: pointer;
+    }
+
+    .guestbook-delete:hover {
+      color: #ef4444;
+    }
+
+    .guestbook-message {
+      font-size: 0.92rem;
+      color: var(--text-sub);
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .guestbook-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .reaction-btn {
+      background: var(--pill-bg);
+      color: var(--text-sub);
+      border: 1px solid var(--item-border);
+      border-radius: 999px;
+      padding: 4px 12px;
+      font-family: inherit;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: transform 0.15s ease, border-color 0.2s ease, color 0.2s ease;
+    }
+
+    .reaction-btn:hover {
+      transform: translateY(-1px);
+      border-color: var(--item-hover-border);
+      color: var(--text-main);
+    }
+
+    .guestbook-empty {
+      text-align: center;
+      padding: 20px;
+      color: var(--text-sub);
+      font-size: 0.9rem;
+      background: var(--pill-bg);
+      border-radius: 16px;
+    }
+
+    /* 하단 푸터 */
+    footer {
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+      color: #ffffff;
+      border-radius: 24px;
+      padding: 20px 24px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 0.98rem;
+      box-shadow: 0 10px 25px -8px rgba(99, 102, 241, 0.45);
+    }
+
+    /* 모바일 반응형 (스마트폰 화면) */
+    @media (max-width: 600px) {
+      body {
+        padding: 20px 14px 36px;
+      }
+
+      header {
+        padding: 20px 18px 24px;
+        border-radius: 24px;
+      }
+
+      header h1 {
+        font-size: 1.38rem;
+      }
+
+      main {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+
+      section {
+        padding: 20px 18px;
+        border-radius: 22px;
+      }
+
+      img {
+        width: 144px;
+        height: 144px;
+      }
+
+      .favorites-card ol {
+        grid-template-columns: 1fr;
+      }
+
+      .guestbook-row {
+        flex-direction: column;
+      }
+
+      footer {
+        font-size: 0.92rem;
+        padding: 18px 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="header-top">
+        <button type="button" class="theme-toggle" id="themeToggle" aria-pressed="false">
+          🌙 다크모드
+        </button>
+      </div>
+      <h1>안녕, 친구들! 나는 김태양이야 👋</h1>
+      <p>나를 소개하는 페이지에 온 걸 환영해!</p>
+      <hr>
+    </header>
+
+    <main>
+      <section class="photo-card">
+        <h2>내 사진</h2>
+        <figure>
+          <div class="avatar-ring">
+            <img src="profile.jpg" alt="김태양의 프로필 사진" width="240" height="240">
+          </div>
+          <figcaption>여기에 내 사진(profile.jpg)이 들어갈 자리야!</figcaption>
+        </figure>
+      </section>
+
+      <hr>
+
+      <section class="info-card">
+        <h2>기본 정보</h2>
+        <ul>
+          <li><strong>이름:</strong> 김태양</li>
+          <li><strong>MBTI:</strong> ESFJ (사교적인 외교관)</li>
+        </ul>
+      </section>
+
+      <hr>
+
+      <section class="favorites-card">
+        <h2>내가 좋아하는 것 3가지</h2>
+        <ol>
+          <li>
+            <strong>축구 ⚽</strong>
+            <p>친구들과 같이 공 차고 땀 흘리는 게 최고야!</p>
+          </li>
+          <li>
+            <strong>볼링 🎳</strong>
+            <p>스트라이크 칠 때의 짜릿한 기분을 좋아해.</p>
+          </li>
+          <li>
+            <strong>개발하기 💻</strong>
+            <p>코드를 작성해서 직접 무언가를 만들어 내는 게 재밌어.</p>
+          </li>
+        </ol>
+      </section>
+
+      <section class="guestbook-card">
+        <h2>친구들 방명록 ✍️</h2>
+        <form class="guestbook-form" id="guestbookForm">
+          <div class="guestbook-row">
+            <input type="text" id="guestName" placeholder="이름을 적어줘" maxlength="20" required>
+            <button type="submit" class="guestbook-submit">남기기</button>
+          </div>
+          <textarea id="guestMessage" placeholder="태양이에게 한마디 남겨줘!" maxlength="200" required></textarea>
+        </form>
+        <ul class="guestbook-list" id="guestbookList"></ul>
+      </section>
+    </main>
+
+    <hr>
+
+    <footer>
+      <p>앞으로도 잘 지내자, 친구들! 언제든 같이 축구랑 볼링 치러 가자 😊</p>
+    </footer>
+  </div>
+
+  <script>
+    // 다크모드 전환 기능
+    const themeToggle = document.getElementById('themeToggle');
+    const root = document.documentElement;
+    const THEME_KEY = 'taeyang_intro_theme';
+
+    function applyTheme(theme) {
+      if (theme === 'dark') {
+        root.setAttribute('data-theme', 'dark');
+        themeToggle.textContent = '☀️ 라이트모드';
+        themeToggle.setAttribute('aria-pressed', 'true');
+      } else {
+        root.removeAttribute('data-theme');
+        themeToggle.textContent = '🌙 다크모드';
+        themeToggle.setAttribute('aria-pressed', 'false');
+      }
+    }
+
+    const savedTheme = localStorage.getItem(THEME_KEY) || 'light';
+    applyTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const isDark = root.getAttribute('data-theme') === 'dark';
+      const nextTheme = isDark ? 'light' : 'dark';
+      localStorage.setItem(THEME_KEY, nextTheme);
+      applyTheme(nextTheme);
+    });
+
+    // 방명록 기능
+    const guestbookForm = document.getElementById('guestbookForm');
+    const guestNameInput = document.getElementById('guestName');
+    const guestMessageInput = document.getElementById('guestMessage');
+    const guestbookList = document.getElementById('guestbookList');
+    const GUESTBOOK_KEY = 'taeyang_intro_guestbook';
+
+    function loadEntries() {
+      try {
+        const raw = localStorage.getItem(GUESTBOOK_KEY);
+        return raw ? JSON.parse(raw) : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function saveEntries(entries) {
+      localStorage.setItem(GUESTBOOK_KEY, JSON.stringify(entries));
+    }
+
+    function formatDate(date) {
+      const pad = (n) => String(n).padStart(2, '0');
+      return `${date.getFullYear()}.${pad(date.getMonth() + 1)}.${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}`;
+    }
+
+    function renderGuestbook() {
+      const entries = loadEntries();
+      guestbookList.innerHTML = '';
+
+      if (entries.length === 0) {
+        const emptyItem = document.createElement('li');
+        emptyItem.className = 'guestbook-empty';
+        emptyItem.textContent = '아직 남겨진 글이 없어. 첫 번째 방명록을 남겨줘!';
+        guestbookList.appendChild(emptyItem);
+        return;
+      }
+
+      entries.forEach((entry) => {
+        const li = document.createElement('li');
+        li.className = 'guestbook-item';
+
+        const header = document.createElement('div');
+        header.className = 'guestbook-item-header';
+
+        const author = document.createElement('span');
+        author.className = 'guestbook-author';
+        author.textContent = entry.name;
+
+        const meta = document.createElement('div');
+        meta.className = 'guestbook-meta';
+
+        const dateSpan = document.createElement('span');
+        dateSpan.className = 'guestbook-date';
+        dateSpan.textContent = entry.date;
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.type = 'button';
+        deleteBtn.className = 'guestbook-delete';
+        deleteBtn.textContent = '삭제';
+        deleteBtn.addEventListener('click', () => {
+          const updated = loadEntries().filter((item) => item.id !== entry.id);
+          saveEntries(updated);
+          renderGuestbook();
+        });
+
+        meta.appendChild(dateSpan);
+        meta.appendChild(deleteBtn);
+        header.appendChild(author);
+        header.appendChild(meta);
+
+        const msg = document.createElement('p');
+        msg.className = 'guestbook-message';
+        msg.textContent = entry.message;
+
+        const actions = document.createElement('div');
+        actions.className = 'guestbook-actions';
+
+        const likeBtn = document.createElement('button');
+        likeBtn.type = 'button';
+        likeBtn.className = 'reaction-btn';
+        likeBtn.textContent = `👍 ${entry.likes || 0}`;
+        likeBtn.addEventListener('click', () => {
+          const updated = loadEntries().map((item) =>
+            item.id === entry.id ? { ...item, likes: (item.likes || 0) + 1 } : item
+          );
+          saveEntries(updated);
+          renderGuestbook();
+        });
+
+        const dislikeBtn = document.createElement('button');
+        dislikeBtn.type = 'button';
+        dislikeBtn.className = 'reaction-btn';
+        dislikeBtn.textContent = `👎 ${entry.dislikes || 0}`;
+        dislikeBtn.addEventListener('click', () => {
+          const updated = loadEntries().map((item) =>
+            item.id === entry.id ? { ...item, dislikes: (item.dislikes || 0) + 1 } : item
+          );
+          saveEntries(updated);
+          renderGuestbook();
+        });
+
+        actions.appendChild(likeBtn);
+        actions.appendChild(dislikeBtn);
+
+        li.appendChild(header);
+        li.appendChild(msg);
+        li.appendChild(actions);
+        guestbookList.appendChild(li);
+      });
+    }
+
+    guestbookForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = guestNameInput.value.trim();
+      const message = guestMessageInput.value.trim();
+      if (!name || !message) return;
+
+      const entries = loadEntries();
+      entries.unshift({
+        id: Date.now(),
+        name,
+        message,
+        date: formatDate(new Date()),
+        likes: 0,
+        dislikes: 0
+      });
+      saveEntries(entries);
+
+      guestNameInput.value = '';
+      guestMessageInput.value = '';
+      renderGuestbook();
+    });
+
+    renderGuestbook();
+  </script>
+</body>
+</html>
